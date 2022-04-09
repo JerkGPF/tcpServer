@@ -313,6 +313,43 @@ void MyTcpSocket::recvMsg()
         respdu = NULL;
         break;
     }
+    case ENUM_MSG_TYPE_DEL_DIR_REQUEST:
+    {
+        char caName[32] = {'\0'};
+        strcpy(caName,pdu->caData);
+        char* pPath = new char[pdu->uiMsgLen];
+        memcpy(pPath,pdu->caMsg,pdu->uiMsgLen);
+        QString strPath = QString("%1/%2").arg(pPath).arg(caName);
+        qDebug()<<strPath;
+
+        QFileInfo fileInfo(strPath);
+        bool ret = false;
+        if(fileInfo.isDir())//如果是目录则删除
+        {
+            QDir dir;
+            dir.setPath(strPath);
+            ret = dir.removeRecursively();
+        }
+        else if(fileInfo.isFile()) // 常规文件不删除
+            ret = false;
+        PDU *respdu = NULL;  //回复pdu
+        if(ret)
+        {
+            respdu = mkPDU(strlen(DEL_DIR_OK)+1);
+            respdu->uiMsgType = ENUM_MSG_TYPE_DEL_DIR_RESPOND;
+            memcpy(respdu->caData,DEL_DIR_OK,strlen(DEL_DIR_OK));
+        }
+        else
+        {
+            respdu = mkPDU(strlen(DEL_DIR_FAILURED)+1);
+            respdu->uiMsgType = ENUM_MSG_TYPE_DEL_DIR_RESPOND;
+            memcpy(respdu->caData,DEL_DIR_FAILURED,strlen(DEL_DIR_FAILURED));
+        }
+        write((char*)respdu,respdu->uiPDULen);
+        free(respdu);
+        respdu = NULL;
+        break;
+    }
     default:
         break;
     }

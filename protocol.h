@@ -23,6 +23,26 @@ typedef unsigned int uint;
 #define FILE_NAME_EXIST "file name exist"
 #define CREAT_DIR_OK "create dir ok"
 
+
+#define DEL_DIR_OK "delete dir ok"
+#define DEL_DIR_FAILURED "delete dir failured: is reguler file"
+
+#define RENAME_FILE_OK "rename file ok"
+#define RENAME_FILE_FAILURED "rename file failured"
+
+#define ENTER_DIR_FAILURED "enter dir failured: is reguler file"
+
+#define DEL_FILE_OK "delete file ok"
+#define DEL_FILE_FAILURED "delete file failured: is diretory"
+
+#define UPLOAD_FILE_OK "upload file ok"
+#define UPLOAD_FILE_FAILURED "upload file failured"
+
+#define MOVE_FILE_OK "move file ok"
+#define MOVE_FILE_FAILURED "move file failured:is reguler file"
+
+#define COMMON_ERR "operate failed: system is busy"
+
 enum ENUM_MSG_TYPE
 {
     ENUM_MSG_TYPE_MIN=0,
