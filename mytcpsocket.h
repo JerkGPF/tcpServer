@@ -3,10 +3,10 @@
 
 #include <QTcpSocket>
 #include "protocol.h"
-#include "opendb.h"
+#include "opedb.h"
 #include <QDir>
-
-
+#include <QFile>
+#include <QTimer>
 
 class MyTcpSocket : public QTcpSocket
 {
@@ -14,14 +14,25 @@ class MyTcpSocket : public QTcpSocket
 public:
     MyTcpSocket();
     QString getName();
+    void copyDir(QString strSrcDir, QString strDestDir);
+
 signals:
-    void offLine(MyTcpSocket *mySocket);
+    void offline(MyTcpSocket *mysocket);
 
 public slots:
     void recvMsg();
-    void clientOffLine();//处理客户端下线
+    void clientOffline();
+    void sendFileToClient();
+
 private:
-    QString mStrName;
+    QString m_strName;
+
+    QFile m_file;
+    qint64 m_iTotal;
+    qint64 m_iRecved;
+    bool m_bUpload;
+
+    QTimer *m_pTimer;
 };
 
 #endif // MYTCPSOCKET_H

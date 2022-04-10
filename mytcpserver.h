@@ -5,24 +5,23 @@
 #include <QList>
 #include "mytcpsocket.h"
 
-
 class MyTcpServer : public QTcpServer
 {
     Q_OBJECT
 public:
     MyTcpServer();
-
-    //单例
     static MyTcpServer &getInstance();
-    //重写该虚函数。
-    void incomingConnection(qintptr handle) override;
 
-    void reSend(const char* perName,PDU* pdu);
+    void incomingConnection(qintptr socketDescriptor);
+
+    void resend(const char *pername, PDU *pdu);
 
 public slots:
-    void deleteSocket(MyTcpSocket *mySocket);
+    void deleteSocket(MyTcpSocket *mysocket);
+
 private:
-    QList<MyTcpSocket*> mTcpSocketList;
+    QList<MyTcpSocket*> m_tcpSocketList;
+
 };
 
 #endif // MYTCPSERVER_H

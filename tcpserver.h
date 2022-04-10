@@ -4,23 +4,24 @@
 #include <QWidget>
 #include "mytcpserver.h"
 
-QT_BEGIN_NAMESPACE
-namespace Ui { class TcpServer; }
-QT_END_NAMESPACE
+namespace Ui {
+class TcpServer;
+}
 
 class TcpServer : public QWidget
 {
     Q_OBJECT
 
 public:
-    TcpServer(QWidget *parent = nullptr);
+    explicit TcpServer(QWidget *parent = 0);
     ~TcpServer();
     void loadConfig();
 
 private:
     Ui::TcpServer *ui;
 
-    QString mStrIp;
-    quint16 mUsPort;
+    QString m_strIP;
+    quint16 m_usPort;
 };
+
 #endif // TCPSERVER_H
